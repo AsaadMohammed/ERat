@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
@@ -9,7 +8,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Client", "ERat-Client\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Encryption", "ERat-Encryption\ERat-Encryption.csproj", "{7A1231B6-0198-4215-A3C0-839E7E8C2587}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Server", "ERat-Server\ERat-Server.csproj", "{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Server-Backend", "ERat-Server-Backend\ERat-Server-Backend.csproj", "{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Server-Frontend", "ERat-Server-Frontend\ERat-Server-Frontend.csproj", "{FE216BA8-4A9A-4ADB-9547-7CD4723AC83C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +34,10 @@ Global
 		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE216BA8-4A9A-4ADB-9547-7CD4723AC83C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE216BA8-4A9A-4ADB-9547-7CD4723AC83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE216BA8-4A9A-4ADB-9547-7CD4723AC83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE216BA8-4A9A-4ADB-9547-7CD4723AC83C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

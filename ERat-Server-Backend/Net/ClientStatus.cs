@@ -5,7 +5,7 @@ namespace ERat.Net {
 
     public class ClientStatus {
 
-        public ClientStatus(Socket handler, int bufferSize = Misc.Configurations.BufferSize) : this(handler, new byte[bufferSize]) { }
+        public ClientStatus(Socket handler, int bufferSize) : this(handler, new byte[bufferSize]) { }
 
         public ClientStatus(Socket handler, byte[] buffer) {
             Handler = handler;
