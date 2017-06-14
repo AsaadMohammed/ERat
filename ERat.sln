@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Encryption-Test", "ERat-Test\ERat-Encryption-Test.csproj", "{95069802-2931-46E7-8C42-E40FE84DF69B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat", "ERat\ERat.csproj", "{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Client", "ERat-Client\ERat-Client.csproj", "{8C2024FC-C368-47A2-9826-39DC2D83DC2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERat-Encryption", "ERat-Encryption\ERat-Encryption.csproj", "{7A1231B6-0198-4215-A3C0-839E7E8C2587}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95069802-2931-46E7-8C42-E40FE84DF69B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95069802-2931-46E7-8C42-E40FE84DF69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95069802-2931-46E7-8C42-E40FE84DF69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95069802-2931-46E7-8C42-E40FE84DF69B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB8B61C-C76E-40A4-A56E-687EA7FE0A2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2024FC-C368-47A2-9826-39DC2D83DC2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2024FC-C368-47A2-9826-39DC2D83DC2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2024FC-C368-47A2-9826-39DC2D83DC2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2024FC-C368-47A2-9826-39DC2D83DC2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A1231B6-0198-4215-A3C0-839E7E8C2587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1231B6-0198-4215-A3C0-839E7E8C2587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1231B6-0198-4215-A3C0-839E7E8C2587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A1231B6-0198-4215-A3C0-839E7E8C2587}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
