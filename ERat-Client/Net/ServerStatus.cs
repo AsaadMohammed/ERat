@@ -8,8 +8,9 @@ namespace ERat.Net {
     class ServerStatus {
         public Socket Handler { get; private set; }
         public IPAddress IpAddress { get; private set; }
-        public byte[] Buffer { get; set; }
+        public byte[] ReceiveBuffer { get; set; }
 
+        public bool ServerConnected { get; set; } = false;
         public ConcurrentQueue<byte[]> BufferQueue { get; set; } = new ConcurrentQueue<byte[]>();
         public ConcurrentQueue<PacketInterface> PacketsQueue { get; set; } = new ConcurrentQueue<PacketInterface>();
 
@@ -17,15 +18,19 @@ namespace ERat.Net {
             Handler = handler;
             IpAddress = ipAddress;
 
-            Buffer = new byte[ERat.Misc.Configurations.BufferSize];
+            ReceiveBuffer = new byte[Misc.Configurations.BufferSize];
         }
 
-        public delegate void ServerDisconnectedHandler(ServerStatus server);
+        public delegate void ServerConnectedHandler(ServerStatus server);
+        public event ServerConnectedHandler OnServerConnected;
+        public void RaiseServerConnectedEvent() { ServerConnected = true; OnServerConnected?.Invoke(this); }
+
+        public delegate void ServerDisconnectedHandler(ServerStatus server, ClientSocket socket);
         public event ServerDisconnectedHandler OnServerDisconnected;
-        public void RaiseServerDisconnectedEvent() => OnServerDisconnected?.Invoke(this);
+        public void RaiseServerDisconnectedEvent(ClientSocket socket) { ServerConnected = false; OnServerDisconnected?.Invoke(this, socket); }
 
         public delegate void DataReceivedHandler(ServerStatus client, int dataLength);
         public event DataReceivedHandler OnDataReceiving;
-        public void RaiseDataReceivedEvent(int dataLength) => OnDataReceiving?.Invoke(this, dataLength);
+        public void RaiseDataReceivedEvent(int dataLength) { if (ServerConnected) OnDataReceiving?.Invoke(this, dataLength); }
     }
 }

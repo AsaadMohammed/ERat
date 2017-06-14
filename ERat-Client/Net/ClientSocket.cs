@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using ERat.Net.Packets;
 using static ERat.Misc.ConsoleWriter;
 
@@ -9,66 +10,49 @@ namespace ERat.Net {
     class ClientSocket {
         public int Port { get; private set; }
         public IPAddress IpAddress { get; private set; }
+        public Thread ServerConnectionCheck { get; private set; }
+        public ServerStatus ConnectedServerStatus { get; private set; }
+        public Socket ConnectionsHandler { get; private set; } = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        private Socket ConnectionsHandler { get; set; } = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        // TODO: Find a way to select a good ip address from the `GetHostAddresses` function returned array
+        public ClientSocket(string hostname, int port, out ServerStatus serverStatus) : this(Dns.GetHostAddresses(hostname)[1], port, out serverStatus) { throw new NotImplementedException(); }
 
-        public ClientSocket(string hostname, int port) {
-            throw new NotImplementedException();
-        }
-
-        public ClientSocket(IPAddress ipAddress, int port) {
+        public ClientSocket(IPAddress ipAddress, int port, out ServerStatus serverStatus) {
             IpAddress = ipAddress;
             Port = port;
+            serverStatus = ConnectedServerStatus = new ServerStatus(ConnectionsHandler, IpAddress);
         }
 
         public void connect() {
-            ConnectionsHandler.BeginConnect(IpAddress, Port, new AsyncCallback(ConnectCallback), ConnectionsHandler);
+            ConnectionsHandler.BeginConnect(IpAddress, Port, new AsyncCallback(ConnectCallback), ConnectedServerStatus);
         }
 
         private void ConnectCallback(IAsyncResult ar) {
+            ServerStatus serverStatus = (ServerStatus)ar.AsyncState;
             try {
-                Socket handler = (Socket)ar.AsyncState;
-                handler.EndConnect(ar);
-                WriteInfo("Connected to {0}:{1}", IpAddress.ToString(), Port);
-
-                ServerStatus serverStatus = new ServerStatus(handler, IpAddress);
-                serverStatus.OnDataReceiving += new ServerStatus.DataReceivedHandler(DataDispatcher);
-                serverStatus.OnServerDisconnected += new ServerStatus.ServerDisconnectedHandler(ServerDisconnected);
-
-                handler.BeginReceive(serverStatus.Buffer, 0, ERat.Misc.Configurations.BufferSize, SocketFlags.None, new AsyncCallback(ReceiveCallback), serverStatus);
+                serverStatus.Handler.EndConnect(ar);
+                serverStatus.RaiseServerConnectedEvent();
+                serverStatus.Handler.BeginReceive(serverStatus.ReceiveBuffer, 0, serverStatus.ReceiveBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), serverStatus);
             }
             catch (SocketException ex) when (ex.ErrorCode == 10061) {
-                WriteError("Connection refused");
-                WriteInfo("Reconnecting");
-                connect();
+                serverStatus.RaiseServerDisconnectedEvent(this);
             }
         }
 
         private void ReceiveCallback(IAsyncResult ar) {
+            ServerStatus serverStatus = (ServerStatus)ar.AsyncState;
             try {
-                ServerStatus serverStatus = (ServerStatus)ar.AsyncState;
                 int length = serverStatus.Handler.EndReceive(ar);
 
-                serverStatus.BufferQueue.Enqueue(serverStatus.Buffer.Take(length).ToArray());
+                serverStatus.BufferQueue.Enqueue(serverStatus.ReceiveBuffer.Take(length).ToArray());
 
                 serverStatus.RaiseDataReceivedEvent(length);
-                serverStatus.Handler.BeginReceive(serverStatus.Buffer, 0, ERat.Misc.Configurations.BufferSize, SocketFlags.None, new AsyncCallback(ReceiveCallback), serverStatus);
+                serverStatus.Handler.BeginReceive(serverStatus.ReceiveBuffer, 0, serverStatus.ReceiveBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), serverStatus);
             }
             catch (SocketException ex) when (ex.ErrorCode == 10054) {
-                WriteError("Connection Lost");
-                ConnectionsHandler.Disconnect(true);
-                connect();
+                serverStatus.Handler.Disconnect(true);
+                serverStatus.RaiseServerDisconnectedEvent(this);
             }
-        }
-
-        public void DataDispatcher(ServerStatus server, int dataLength) {
-            byte[] packet;
-            server.BufferQueue.TryDequeue(out packet);
-            WriteInfo("{0}", System.Text.Encoding.Default.GetString(packet));
-        }
-
-        public void ServerDisconnected(ServerStatus server) {
-            WriteError("Connection Lost");
         }
     }
 }

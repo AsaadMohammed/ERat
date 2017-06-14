@@ -7,7 +7,7 @@
     <ProjectGuid>{8C2024FC-C368-47A2-9826-39DC2D83DC2A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ERat</RootNamespace>
-    <AssemblyName>ERat</AssemblyName>
+    <AssemblyName>ERat-Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

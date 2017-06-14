@@ -60,10 +60,6 @@
       <Project>{7a1231b6-0198-4215-a3c0-839e7e8c2587}</Project>
       <Name>ERat-Encryption</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ERat\ERat.csproj">
-      <Project>{eeb8b61c-c76e-40a4-a56e-687ea7fe0a2d}</Project>
-      <Name>ERat</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
